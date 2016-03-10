@@ -40,7 +40,6 @@ if(!($currentVersionNumber))
 }
 
 # Download Unity3D editor and Windows build support
-New-Item -ItemType directory -Path "$dependenciesDir"
 wget -OutFile "$env:TEMP_DIR\$currentVersion.exe" $currentDownloadLink 
 wget -OutFile "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" "http://netstorage.unity3d.com/unity/$currentRevision/TargetSupportInstaller/UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe"
 
