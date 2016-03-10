@@ -31,7 +31,6 @@ if(!($currentVersion))
 }
     
 # Download ImageMagick
-New-Item -ItemType directory -Path "$dependenciesDir"
 wget -OutFile "$env:TEMP_DIR\$currentVersion.zip" $currentDownloadLink 
 
 # Install ImageMagick 
