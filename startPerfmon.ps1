@@ -1,12 +1,19 @@
-﻿$vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
+. .\sharedFunctions.ps1
 
 Start-Job -ArgumentList $args[0] -scriptblock { 
+    $version = Locate-VSVersion
+    $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
+    $vsperfcmd = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsperfcmd.exe"
 
     $outputFile = $args[0]
     $vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
     Start-Process -Verb runAs -FilePath "$vsPath\Team Tools\Performance Tools\vsperfcmd.exe" -ArgumentList "/Start:coverage /Output:$outputFile /CrossSession /User:Everyone" 
 
 } 
+
+$version = Locate-VSVersion
+$vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
+$vsperfcmd = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsperfcmd.exe"
 
 #wait for VSPerfCmd to start up
 Write-Host "Waiting 5s for vsperfmon to start up..."
@@ -27,8 +34,11 @@ while($counter -lt 6)
         $counter++
         continue
     }
-
-    Add-AppveyorMessage -Category Error -Message "Cannot start vsperfmon" 
-    $host.SetShouldExit(1)
+    else
+    {
+        Add-AppveyorMessage -Category Error -Message "Cannot start vsperfmon" 
+        $host.SetShouldExit(1)
+        exit 1
+    }
 }
 
