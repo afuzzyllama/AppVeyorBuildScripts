@@ -9,8 +9,35 @@ if((Test-Path "$vsPath\Team Tools\Performance Tools\vsinstr.exe") -eq $false)
     exit 1
 }
 #>
+function Locate-VSVersion()
+{
+	#Find the latest version
+	$regPath = "HKLM:\SOFTWARE\Microsoft\VisualStudio"
+	if (-not (Test-Path $regPath))
+	{
+		return $null
+	}
+	
+	$keys = Get-Item $regPath | %{$_.GetSubKeyNames()} -ErrorAction SilentlyContinue
+	$version = Get-SubKeysInFloatFormat $keys | Sort-Object -Descending | Select-Object -First 1
 
-Start-Process -FilePath "vsinstr" -ArgumentList "-coverage $assemblyToInstrument" -NoNewWindow -Wait
+	if ([string]::IsNullOrWhiteSpace($version))
+	{
+		return $null
+	}
+	return $version
+}
+
+$version = Locate-VSVersion
+$vsComnDir = [Environment]::GetEnvironmentVariable([string]::Format("VS{0}0COMNTools", $version))
+$vsinstr = "$vsComnDir\..\Team Tools\Performance Tools\vsinstr.exe"
+
+if((Test-Path $vsinstr) -eq $false)
+{
+    Add-AppveyorMessage -Category Error -Message "Cannot find vsinstr at '$vsinstr'"
+}
+
+Start-Process -FilePath $vsinstr -ArgumentList "-coverage $assemblyToInstrument" -NoNewWindow -Wait
 
 if((Test-Path "$assemblyToInstrument.orig") -eq $false)
 {
