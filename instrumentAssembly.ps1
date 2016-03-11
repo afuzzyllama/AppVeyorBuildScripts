@@ -30,10 +30,14 @@ function Locate-VSVersion()
 
 function Get-SubKeysInFloatFormat($keys)
 {
+	[decimal]$decimalKey
 	$targetKeys = @()      # New array
 	foreach ($key in $keys)
 	{
-		$targetKeys += [decimal] $key
+		if([decimal]::TryParse($key, $decimalKey) -eq $true)
+		{
+			$targetKeys += [decimal] $decimalKey
+		}
 	}
 
 	return $targetKeys
