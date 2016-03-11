@@ -7,7 +7,7 @@ Start-Job -ArgumentList $args[0] -scriptblock {
 
     $outputFile = $args[0]
     $vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
-    Start-Process -Verb runAs -FilePath "$vsPath\Team Tools\Performance Tools\vsperfcmd.exe" -ArgumentList "/Start:coverage /Output:$outputFile /CrossSession /User:Everyone" 
+    Start-Process -Verb runAs -FilePath $vsperfcmd -ArgumentList "/Start:coverage /Output:$outputFile /CrossSession /User:Everyone" 
 
 } 
 
@@ -22,7 +22,7 @@ Start-Sleep -s 5
 $counter = 0
 while($counter -lt 6)
 {
-    $e = Start-Process -Verb runAs -FilePath "$vsPath\Team Tools\Performance Tools\vsperfcmd.exe" -ArgumentList "/status" -PassThru -Wait
+    $e = Start-Process -Verb runAs -FilePath $vsperfcmd -ArgumentList "/status" -PassThru -Wait
 
     if ($e.ExitCode -eq 0){
         break       
