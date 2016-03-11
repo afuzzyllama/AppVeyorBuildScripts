@@ -45,6 +45,6 @@ wget -OutFile "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersi
 
 # Install Unity3D editor and Windows build support
 Start-Process -Wait -FilePath "$env:TEMP_DIR\$currentVersion.exe" -ArgumentList "/S /D=$dependenciesDir"
-Start-Process -Wait -FilePath "$env:TEMP_DIR\$currentVersion\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" -ArgumentList "/S /D=$dependenciesDir"
+Start-Process -Wait -FilePath "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" -ArgumentList "/S /D=$dependenciesDir"
 
 Add-AppveyorMessage -Category Information -Message "Installed: $currentVersion"
