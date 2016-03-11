@@ -1,5 +1,10 @@
-﻿$vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
-Start-Process -Verb runAs -FilePath "$vsPath\Team Tools\Performance Tools\vsperfcmd.exe" -ArgumentList "/shutdown" 
+. .\sharedFunctions.ps1
+
+$version = Locate-VSVersion
+$vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
+$vsperfcmd = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsperfcmd.exe"
+
+Start-Process -Verb runAs -FilePath $vsperfcmd -ArgumentList "/shutdown" 
 
 Get-job | Remove-Job
 
