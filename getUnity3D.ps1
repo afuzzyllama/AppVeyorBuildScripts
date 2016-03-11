@@ -1,7 +1,7 @@
 <#
     Script to install the latest version of Unity3D on agent
 #>
-
+$ErrorActionPreference = "Stop"
 $archiveContentFile = "$env:TEMP_DIR\content.html"
 $dependenciesDir = "$env:DEPENDENCIES_DIR\Unity"
 
