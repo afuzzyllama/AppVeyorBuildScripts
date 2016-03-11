@@ -1,14 +1,5 @@
 ﻿$assemblyToInstrument = $args[0]
-<#
-$vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
 
-
-if((Test-Path "$vsPath\Team Tools\Performance Tools\vsinstr.exe") -eq $false)
-{
-    Add-AppveyorMessage -Category Error -Message "Cannot find vsinstr.exe at '$vsPath\Team Tools\Performance Tools\vsinstr.exe'"
-    exit 1
-}
-#>
 function Locate-VSVersion()
 {
 	#Find the latest version
@@ -49,10 +40,11 @@ function Get-LatestVersion($keys)
 }
 
 $version = Locate-VSVersion
-Write-Host [string]::Format("VS{0}COMNTools", $version)
-Write-Host [Environment]::GetEnvironmentVariable([string]::Format("VS{0}COMNTools", $version))
-$vsComnDir = [Environment]::GetEnvironmentVariable([string]::Format("VS{0}COMNTools", $version))
+Write-Host "VS$versionCOMNTools"
+$vsComnDir = [Environment]::GetEnvironmentVariable("VS$versionCOMNTools")
+Write-Host [Environment]::GetEnvironmentVariable("VS$versionCOMNTools")
 $vsinstr = "$vsComnDir\..\Team Tools\Performance Tools\vsinstr.exe"
+Write-Host $vsinstr
 
 if((Test-Path $vsinstr) -eq $false)
 {
