@@ -34,7 +34,7 @@ function Get-SubKeysInFloatFormat($keys)
 	$targetKeys = @()      # New array
 	foreach ($key in $keys)
 	{
-		if([decimal]::TryParse($key, $decimalKey) -eq $true)
+		if([decimal]::TryParse($key, [ref]$decimalKey) -eq $true)
 		{
 			$targetKeys += [decimal] $decimalKey
 		}
