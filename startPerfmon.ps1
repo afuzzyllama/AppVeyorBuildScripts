@@ -29,5 +29,6 @@ while($counter -lt 6)
     }
 
     Add-AppveyorMessage -Category Error -Message "Cannot start vsperfmon" 
+    $host.SetShouldExit(1)
 }
 
