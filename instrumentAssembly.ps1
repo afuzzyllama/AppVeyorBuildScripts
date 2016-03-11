@@ -41,8 +41,6 @@ function Get-LatestVersion($keys)
 			{
 				$latestVersion = $decimalKey
 				$latestVersionString = $key.Replace(".", "")
-				Write-Host $latestVersion
-				Write-Host $latestVersionString
 			}
 		}
 	}
