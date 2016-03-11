@@ -19,7 +19,7 @@ function Locate-VSVersion()
 	}
 	
 	$keys = Get-Item $regPath | %{$_.GetSubKeyNames()} -ErrorAction SilentlyContinue
-	$version = Get-SubKeysInFloatFormat $keys | Sort-Object -Descending | Select-Object -First 1
+	$version = Get-LatestVersion $keys
 
 	if ([string]::IsNullOrWhiteSpace($version))
 	{
@@ -28,22 +28,26 @@ function Locate-VSVersion()
 	return $version
 }
 
-function Get-SubKeysInFloatFormat($keys)
+function Get-LatestVersion($keys)
 {
 	[decimal]$decimalKey = $null
-	$targetKeys = @()      # New array
+	[decimal]$latestVersion = 0.0
+	[string]$latestVersionString = "00"
 	foreach ($key in $keys)
 	{
 		Write-Host $key
 		if([decimal]::TryParse($key, [ref]$decimalKey) -eq $true)
 		{
-			$targetKeys += $decimalKey
+			if($latestVersion -lt $decimalKey)
+			{
+				$latestVersion = $decimalKey
+				$latestVersionString = $key.Replace(".", "")
+			}
 		}
 	}
 
-	return $targetKeys
+	return $latestVersionString
 }
-
 
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable([string]::Format("VS{0}0COMNTools", $version))
