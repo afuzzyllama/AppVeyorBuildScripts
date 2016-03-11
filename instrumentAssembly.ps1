@@ -40,11 +40,8 @@ function Get-LatestVersion($keys)
 }
 
 $version = Locate-VSVersion
-Write-Host "VS$($version)COMNTools"
 $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
-Write-Host [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
-$vsinstr = "$vsComnDir\..\Team Tools\Performance Tools\vsinstr.exe"
-Write-Host $vsinstr
+$vsinstr = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsinstr.exe"
 
 if((Test-Path $vsinstr) -eq $false)
 {
