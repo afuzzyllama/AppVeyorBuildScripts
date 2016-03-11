@@ -1,4 +1,4 @@
-.\sharedFunctions.ps1
+. .\sharedFunctions.ps1
 
 ﻿$assemblyToInstrument = $args[0]
 
