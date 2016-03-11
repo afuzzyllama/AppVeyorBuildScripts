@@ -30,6 +30,7 @@ Remove-Item -Path $archiveContentFile
 if(!($currentVersion))
 {
     Add-AppveyorMessage -Category Error -Message "Cannot obtain the most current version of ImageMagick."  
+    $host.SetShouldExit(1)
 }
     
 # Download ImageMagick
