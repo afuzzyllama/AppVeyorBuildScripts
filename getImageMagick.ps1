@@ -1,6 +1,7 @@
 <#
     Script to install the most current version of ImageMagick on agent
 #>
+Write-Host "Getting latest version of ImageMagick"
 
 Add-Type -Assembly System.IO.Compression.FileSystem
 
