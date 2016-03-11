@@ -1,19 +1,14 @@
 . $env:BUILD_SCRIPTS_DIR\sharedFunctions.ps1
 
-Start-Job -ArgumentList $args[0] -scriptblock { 
-    $version = Locate-VSVersion
-    $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
-    $vsperfcmd = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsperfcmd.exe"
-
-    $outputFile = $args[0]
-    $vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
-    Start-Process -Verb runAs -FilePath $vsperfcmd -ArgumentList "/Start:coverage /Output:$outputFile /CrossSession /User:Everyone" 
-
-} 
+$outputFile = $args[0]
 
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
 $vsperfcmd = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsperfcmd.exe"
+
+
+$vsPath = [Microsoft.Win32.Registry]::GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\", "ShellFolder", $null);
+Start-Process -FilePath $vsperfcmd -ArgumentList "/Start:coverage /Output:$outputFile" 
 
 #wait for VSPerfCmd to start up
 Write-Host "Waiting 5s for vsperfmon to start up..."
