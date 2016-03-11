@@ -1,4 +1,4 @@
-. .\sharedFunctions.ps1
+. $env:BUILD_SCRIPTS_DIR\sharedFunctions.ps1
 
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
