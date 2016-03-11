@@ -28,6 +28,18 @@ function Locate-VSVersion()
 	return $version
 }
 
+function Get-SubKeysInFloatFormat($keys)
+{
+	$targetKeys = @()      # New array
+	foreach ($key in $keys)
+	{
+		$targetKeys += [decimal] $key
+	}
+
+	return $targetKeys
+}
+
+
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable([string]::Format("VS{0}0COMNTools", $version))
 $vsinstr = "$vsComnDir\..\Team Tools\Performance Tools\vsinstr.exe"
