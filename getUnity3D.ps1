@@ -5,7 +5,7 @@
 $archiveContentFile = "$env:TEMP_DIR\content.html"
 $dependenciesDir = "$env:DEPENDENCIES_DIR\Unity"
 
-Write-Host "Checking for latest version of Unity3D"
+Write-Host "Getting latest version of Unity3D"
 
 # Create the dependencies directory if it does not exist 
 if(!(Test-Path -Path $dependenciesDir))
