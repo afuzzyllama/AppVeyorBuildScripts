@@ -1,6 +1,6 @@
-. .\sharedFunctions.ps1
+. $env:BUILD_SCRIPTS_DIR\sharedFunctions.ps1
 
-﻿$assemblyToInstrument = $args[0]
+$assemblyToInstrument = $args[0]
 
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
