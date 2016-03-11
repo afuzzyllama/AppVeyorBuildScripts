@@ -1,4 +1,4 @@
-. .\sharedFunctions.ps1
+. $env:BUILD_SCRIPTS_DIR\sharedFunctions.ps1
 
 Start-Job -ArgumentList $args[0] -scriptblock { 
     $version = Locate-VSVersion
