@@ -37,6 +37,7 @@ Remove-Item -Path $archiveContentFile
 if(!($currentVersionNumber))
 {
     Add-AppveyorMessage -Category Error -Message "Cannot obtain the most current version of Unity3D."  
+    $host.SetShouldExit(1)
 }
 
 # Download Unity3D editor and Windows build support
