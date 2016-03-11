@@ -35,13 +35,14 @@ function Get-LatestVersion($keys)
 	[string]$latestVersionString = "00"
 	foreach ($key in $keys)
 	{
-		Write-Host $key
 		if([decimal]::TryParse($key, [ref]$decimalKey) -eq $true)
 		{
 			if($latestVersion -lt $decimalKey)
 			{
 				$latestVersion = $decimalKey
 				$latestVersionString = $key.Replace(".", "")
+				Write-Host $latestVersion
+				Write-Host $latestVersionString
 			}
 		}
 	}
