@@ -2,8 +2,6 @@
 
 ﻿$assemblyToInstrument = $args[0]
 
-
-
 $version = Locate-VSVersion
 $vsComnDir = [Environment]::GetEnvironmentVariable("VS$($version)COMNTools")
 $vsinstr = "$($vsComnDir)..\..\Team Tools\Performance Tools\vsinstr.exe"
