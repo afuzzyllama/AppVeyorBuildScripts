@@ -26,7 +26,7 @@ $currentRevision = $currentDownloadLink | Select-String -Pattern $regex -AllMatc
 $lastSlashPos = $currentRevision.LastIndexOf("/");
 $currentRevision = $currentRevision.Substring($lastSlashPos + 1)
 
-$regex = "UnitySetup32-[0-9]+\.[0-9]+\.[0-9]+f[0-9]+"
+$regex = "UnitySetup64-[0-9]+\.[0-9]+\.[0-9]+f[0-9]+"
 $currentVersion = $currentDownloadLink | Select-String -Pattern $regex -AllMatches  | Select-Object -First 1 | %{$_.Matches} | %{$_.Value}
 
 $regex = "[0-9]+\.[0-9]+\.[0-9]+f[0-9]+"
@@ -40,10 +40,12 @@ if(!($currentVersionNumber))
     $host.SetShouldExit(1)
 }
 
+Write-Host "Downloading $currentVersion"
 # Download Unity3D editor and Windows build support
 wget -OutFile "$env:TEMP_DIR\$currentVersion.exe" $currentDownloadLink 
 wget -OutFile "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" "http://netstorage.unity3d.com/unity/$currentRevision/TargetSupportInstaller/UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe"
 
+Write-Host "Installing $currentVersion"
 # Install Unity3D editor and Windows build support
 Start-Process -Wait -FilePath "$env:TEMP_DIR\$currentVersion.exe" -ArgumentList "/S /D=$dependenciesDir"
 Start-Process -Wait -FilePath "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" -ArgumentList "/S /D=$dependenciesDir"
