@@ -17,7 +17,7 @@ if(!(Test-Path -Path $dependenciesDir))
 wget -OutFile $archiveContentFile https://unity3d.com/get-unity/download/archive
 
 # Parse out the current version of the Unity3D editor
-$regex = "http://netstorage.unity3d.com/unity/[a-z0-9]+/Windows32EditorInstaller/UnitySetup32-[0-9]+\.[0-9]+\.[0-9]+f[0-9]+\.exe"
+$regex = "http://netstorage.unity3d.com/unity/[a-z0-9]+/Windows64EditorInstaller/UnitySetup64-[0-9]+\.[0-9]+\.[0-9]+f[0-9]+\.exe"
 $currentDownloadLink = Select-String -Path $archiveContentFile -Pattern $regex -AllMatches | Select-Object -First 1 | %{$_.Matches} | %{$_.Value}
 
 $regex = "http://netstorage.unity3d.com/unity/[a-z0-9]+"
