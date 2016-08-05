@@ -43,11 +43,9 @@ if(!($currentVersionNumber))
 Write-Host "Downloading $currentVersion"
 # Download Unity3D editor and Windows build support
 wget -OutFile "$env:TEMP_DIR\$currentVersion.exe" $currentDownloadLink 
-wget -OutFile "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" "http://netstorage.unity3d.com/unity/$currentRevision/TargetSupportInstaller/UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe"
 
 Write-Host "Installing $currentVersion"
 # Install Unity3D editor and Windows build support
 Start-Process -Wait -FilePath "$env:TEMP_DIR\$currentVersion.exe" -ArgumentList "/S /D=$dependenciesDir"
-Start-Process -Wait -FilePath "$env:TEMP_DIR\UnitySetup-Windows-Support-for-Editor-$currentVersionNumber.exe" -ArgumentList "/S /D=$dependenciesDir"
 
 Add-AppveyorMessage -Category Information -Message "Installed: $currentVersion"
